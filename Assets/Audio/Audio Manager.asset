@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb4aa4807e0f9324199f06314ea9f5c3, type: 3}
+  m_Name: Audio Manager
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManagement.AudioHolder
+  AudioDatas:
+  - name: 1
+    audioType: 0
+    clip: {fileID: 8300000, guid: 0a06c5bb5a7251b4fbdd1aeee9e0d104, type: 3}
+    volume: 0.5
+    pitch: 1
+    mute: 0
+    loop: 1
+    playOnAwake: 1
+    source: {fileID: 0}
+  - name: 2
+    audioType: 1
+    clip: {fileID: 8300000, guid: cd93119a42ffb9a45890e6ab63117b8a, type: 3}
+    volume: 0.5
+    pitch: 1
+    mute: 0
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: 3
+    audioType: 1
+    clip: {fileID: 8300000, guid: 5270866fdbdcd814b8b02ccc05e3d326, type: 3}
+    volume: 0.5
+    pitch: 1
+    mute: 0
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
