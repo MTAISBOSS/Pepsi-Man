@@ -1,5 +1,6 @@
-﻿using System;
+﻿﻿using System;
 using System.Globalization;
+using System.Collections; // Add for coroutines
 using AudioManagement;
 using TMPro;
 using UnityEngine;
@@ -11,16 +12,53 @@ namespace DefaultNamespace
         [SerializeField] private float baseScoreFactor;
         [SerializeField] private TextMeshProUGUI scoreText;
         [SerializeField] private GameObject gameOverCamera;
-        public bool isGameOver { get; set; }
+        [SerializeField] private LevelParabolaManager parabolaManager;
+
+        [SerializeField] private float minThresholdChangeTime;
+        [SerializeField] private float maxThresholdChangeTime;
+        [SerializeField] private float maxThresholdMagnitude;
+        
+        public bool isGameOver { get; private set; }
         private float _currentScore;
         private Transform _currentLevel;
+        private Coroutine _thresholdCoroutine;
+        [SerializeField] private GameObject gameOverPanel;
+        [SerializeField] private TextMeshProUGUI resultScreenScoreText;
+        [SerializeField] private TextMeshProUGUI resultScreenHighestScoreText;
 
         private void Start()
         {
             _currentScore = 0;
             scoreText.text = _currentScore.ToString(CultureInfo.InvariantCulture);
+            StartThresholdControl();
         }
 
+        private void StartThresholdControl()
+        {
+            if (_thresholdCoroutine != null)
+            {
+                StopCoroutine(_thresholdCoroutine);
+            }
+            
+            if (!isGameOver)
+            {
+                _thresholdCoroutine = StartCoroutine(ControlXThreshold());
+            }
+        }
+
+        private IEnumerator ControlXThreshold()
+        {
+            while (!isGameOver)
+            {
+                float waitTime = UnityEngine.Random.Range(minThresholdChangeTime, maxThresholdChangeTime);
+                yield return new WaitForSeconds(waitTime);
+                if (!isGameOver && parabolaManager != null)
+                {
+                    float randomTarget = UnityEngine.Random.Range(-maxThresholdMagnitude, maxThresholdMagnitude);
+                    parabolaManager.SetTargetXThreshold(randomTarget);
+                }
+            }
+        }
         public void IncreaseScore()
         {
             _currentScore += baseScoreFactor;
@@ -31,12 +69,27 @@ namespace DefaultNamespace
         {
             isGameOver = true;
             gameOverCamera.SetActive(true);
-           AudioManager.Instance.Play(Sound.Death.ToString());
-           var levels =FindObjectsByType<LevelMovement>(FindObjectsSortMode.None);
-           foreach (var level in levels)
-           {
-               level.isGameOver = isGameOver;
-           }
+            AudioManager.Instance.Play(Sound.Death.ToString());
+            var highScore = PlayerPrefs.GetInt("Score", 0);
+            if (highScore < _currentScore)
+            {
+                PlayerPrefs.SetFloat("Score", _currentScore);
+            }
+            if (_thresholdCoroutine != null)
+            {
+                StopCoroutine(_thresholdCoroutine);
+                _thresholdCoroutine = null;
+            }
+            
+            var levels = FindObjectsByType<DirectionMovement>(FindObjectsSortMode.None);
+            foreach (var level in levels)
+            {
+                level.isGameOver = isGameOver;
+            }
+
+            gameOverPanel.SetActive(true);
+            resultScreenScoreText.text = _currentScore.ToString(CultureInfo.InvariantCulture);
+            resultScreenHighestScoreText.text = PlayerPrefs.GetFloat("Score").ToString(CultureInfo.InvariantCulture);
         }
 
         public Transform GetCurrentLevelSpawned()

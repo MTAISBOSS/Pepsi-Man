@@ -10,6 +10,8 @@ namespace AudioManagement
         None,
         Theme,
         Death,
-        Can
+        Can,
+        Slide,
+        Jump
     }
 }

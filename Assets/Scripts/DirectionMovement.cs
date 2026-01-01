@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class LevelMovement : MonoBehaviour
+public class DirectionMovement : MonoBehaviour
 {
    [SerializeField] private Vector3 direction;
    [SerializeField] private float speed;

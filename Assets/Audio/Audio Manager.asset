@@ -25,7 +25,7 @@ MonoBehaviour:
   - name: 2
     audioType: 1
     clip: {fileID: 8300000, guid: cd93119a42ffb9a45890e6ab63117b8a, type: 3}
-    volume: 0.5
+    volume: 1
     pitch: 1
     mute: 0
     loop: 0
@@ -34,7 +34,25 @@ MonoBehaviour:
   - name: 3
     audioType: 1
     clip: {fileID: 8300000, guid: 5270866fdbdcd814b8b02ccc05e3d326, type: 3}
-    volume: 0.5
+    volume: 1
+    pitch: 1
+    mute: 0
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: 4
+    audioType: 1
+    clip: {fileID: 8300000, guid: 7f48a6ff2079b04479e87a917c145959, type: 3}
+    volume: 1
+    pitch: 1
+    mute: 0
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: 5
+    audioType: 1
+    clip: {fileID: 8300000, guid: 6a3f845a575cc6c48b47c7133c27a256, type: 3}
+    volume: 1
     pitch: 1
     mute: 0
     loop: 0

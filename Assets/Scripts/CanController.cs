@@ -6,9 +6,17 @@ using UnityEngine;
 public class CanController : MonoBehaviour
 {
     private GameManager _gameManager;
+    [SerializeField] private Vector3 rotationAxis = Vector3.up;
+    [SerializeField] private float rotationSpeed = 100f;
+
     private void Start()
     {
         _gameManager = FindFirstObjectByType<GameManager>();
+    }
+
+    private void Update()
+    {
+        transform.Rotate(rotationAxis * rotationSpeed * Time.deltaTime, Space.World);
     }
 
     private void OnTriggerEnter(Collider other)
